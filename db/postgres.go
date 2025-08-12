@@ -75,13 +75,13 @@ func InitDB() (*sqlx.DB, error) {
 // CreateUser creates a new user in the database
 func CreateUser(db *sqlx.DB, user *models.User) error {
 	// Check if user already exists
-	var accountExits bool
-	err := db.Get(&accountExits, "SELECT EXISTS(SELECT 1 FROM users WHERE email = $1)", user.Email)
+	var accountExists bool
+	err := db.Get(&accountExists, "SELECT EXISTS(SELECT 1 FROM users WHERE email = $1)", user.Email)
 	if err != nil {
 		return err
 	}
 
-	if accountExits {
+	if accountExists {
 		return errors.New("user with this email already exists")
 	}
 
